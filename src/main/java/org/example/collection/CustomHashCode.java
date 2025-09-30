@@ -424,7 +424,7 @@ public class CustomHashCode <K extends Comparable<K>, V> {
         System.out.println("Load factor: " + ((float) size / table.length));
 
         for (int i = 0; i < table.length; i++) {
-            Node<K, V> node = table[i];  // Исправлено: было table[index]
+            Node<K, V> node = table[i];
             if (node != null) {
                 System.out.println("Bucket " + i + ": " +
                         (node instanceof TreeNode ? "TREE" : "LIST") +
