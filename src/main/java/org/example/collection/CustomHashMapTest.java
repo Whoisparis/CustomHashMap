@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CustomHashCodeTest {
+public class CustomHashMapTest {
 
-    private CustomHashCode<String, Integer> map;
+    private CustomHashMap<String, Integer> map;
 
     @BeforeEach
     void setUp() {
-        map = new CustomHashCode<>();
+        map = new CustomHashMap<>();
     }
 
     @Test
@@ -50,9 +50,31 @@ public class CustomHashCodeTest {
     }
 
     @Test
+    @DisplayName("Test null keys")
+    void testNullKeys() {
+        CustomHashMap<String, Integer> map = new CustomHashMap<>();
+
+        map.put(null, 100);
+        map.put("normal", 200);
+
+        assertEquals(100, map.get(null));
+        assertEquals(200, map.get("normal"));
+        assertEquals(2, map.size());
+
+        map.put(null, 300);
+        assertEquals(300, map.get(null));
+        assertEquals(2, map.size());
+
+        Integer removed = map.remove(null);
+        assertEquals(300, removed);
+        assertNull(map.get(null));
+        assertEquals(1, map.size());
+    }
+
+    @Test
     @DisplayName("Test Hash Collision")
     void testHashCollision() {
-        CustomHashCode<Integer, String> collisionMap = new CustomHashCode<>();
+        CustomHashMap<Integer, String> collisionMap = new CustomHashMap<>();
 
         for (int i = 0; i < 10; i++) {
             collisionMap.put(i * 16, "value" + i);
@@ -67,7 +89,7 @@ public class CustomHashCodeTest {
     @Test
     @DisplayName("Test Tree Conversion")
     void testTreeConversion() {
-        CustomHashCode<String, Integer> treeMap = new CustomHashCode<>();
+        CustomHashMap<String, Integer> treeMap = new CustomHashMap<>();
 
         for (int i = 0; i < 20; i++) {
             treeMap.put("key" + i, i);
@@ -110,7 +132,7 @@ public class CustomHashCodeTest {
     @Test
     @DisplayName("Test Remove from collision chain")
     void testRemoveFromCollisionChain() {
-        CustomHashCode<Integer, String> collisionMap = new CustomHashCode<>();
+        CustomHashMap<Integer, String> collisionMap = new CustomHashMap<>();
 
         for (int i = 0; i < 8; i++) {
             collisionMap.put(i * 16, "value" + i);
@@ -149,7 +171,7 @@ public class CustomHashCodeTest {
     @Test
     @DisplayName("Test Resize")
     void testResize() {
-        CustomHashCode<Integer, Integer> resizeMap = new CustomHashCode<>();
+        CustomHashMap<Integer, Integer> resizeMap = new CustomHashMap<>();
 
         int elementsToAdd = (int) (16 * 0.75) + 10;
 

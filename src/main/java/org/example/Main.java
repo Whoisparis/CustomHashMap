@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.collection.CustomHashCode;
+import org.example.collection.CustomHashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class Main {
 
         // Тест 1: Базовые операции
         System.out.println("1. Тест базовых операций:");
-        CustomHashCode<String, Integer> map = new CustomHashCode<>();
+        CustomHashMap<String, Integer> map = new CustomHashMap<>();
 
         map.put("one", 1);
         map.put("two", 2);
@@ -36,7 +36,7 @@ public class Main {
 
         // Тест 4: Коллизии
         System.out.println("\n4. Тест коллизий:");
-        CustomHashCode<Integer, String> collisionMap = new CustomHashCode<>();
+        CustomHashMap<Integer, String> collisionMap = new CustomHashMap<>();
 
         // Создаем коллизии - ключи с одинаковым хешем
         for (int i = 0; i < 5; i++) {
@@ -50,7 +50,7 @@ public class Main {
 
         // Тест 5: Преобразование в дерево
         System.out.println("\n5. Тест преобразования в дерево:");
-        CustomHashCode<String, Integer> treeMap = new CustomHashCode<>();
+        CustomHashMap<String, Integer> treeMap = new CustomHashMap<>();
 
         // Добавляем достаточно элементов для активации treeify
         for (int i = 0; i < 15; i++) {
@@ -68,7 +68,7 @@ public class Main {
 
         // Тест 7: Работа с разными типами
         System.out.println("\n7. Тест с разными типами:");
-        CustomHashCode<Double, Boolean> doubleMap = new CustomHashCode<>();
+        CustomHashMap<Double, Boolean> doubleMap = new CustomHashMap<>();
         doubleMap.put(1.5, true);
         doubleMap.put(2.7, false);
         doubleMap.put(3.14, true);
@@ -79,7 +79,7 @@ public class Main {
 
         // Тест 8: Проверка пустоты
         System.out.println("\n8. Тест проверки пустоты:");
-        CustomHashCode<String, String> emptyMap = new CustomHashCode<>();
+        CustomHashMap<String, String> emptyMap = new CustomHashMap<>();
         System.out.println("   isEmpty() для пустой мапы -> " + emptyMap.isEmpty());
         emptyMap.put("test", "value");
         System.out.println("   isEmpty() после добавления -> " + emptyMap.isEmpty());
@@ -88,7 +88,7 @@ public class Main {
 
         // Тест 9: Последовательные операции
         System.out.println("\n9. Тест последовательных операций:");
-        CustomHashCode<Integer, Integer> sequentialMap = new CustomHashCode<>();
+        CustomHashMap<Integer, Integer> sequentialMap = new CustomHashMap<>();
 
         System.out.println("   Добавление 10 элементов:");
         for (int i = 0; i < 10; i++) {

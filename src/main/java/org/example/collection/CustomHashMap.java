@@ -2,7 +2,7 @@ package org.example.collection;
 
 import java.util.Objects;
 
-public class CustomHashCode <K extends Comparable<K>, V> {
+public class CustomHashMap<K extends Comparable<K>, V> {
 
     private static final int INITIAL_CAPACITY = 16;
     private static final float LOAD_FACTOR = 0.75f;
@@ -43,7 +43,7 @@ public class CustomHashCode <K extends Comparable<K>, V> {
     }
 
     @SuppressWarnings("unchecked")
-    public CustomHashCode() {
+    public CustomHashMap() {
         table = new Node[INITIAL_CAPACITY];
     }
 
@@ -120,12 +120,20 @@ public class CustomHashCode <K extends Comparable<K>, V> {
         return null;
     }
 
-    private V putInTree(TreeNode<K, V> root, int hash, K key, V value, int index) {
+    private V putInTree(TreeNode<K,V> root, int hash, K key, V value, int index) {
+        TreeNode<K, V> existNode = findTreeNode(root,key);
+        if (existNode != null) {
+            V oldValue = existNode.value;
+            existNode.value = value;
+            return oldValue;
+        }
+
         TreeNode<K, V> newNode = new TreeNode<>(hash, key, value, null);
         TreeNode<K, V> result = insertIntoTree(root, newNode);
         if (result != root) {
             table[index] = result;
         }
+        size++;
         return null;
     }
 
@@ -140,7 +148,18 @@ public class CustomHashCode <K extends Comparable<K>, V> {
 
         while (current != null) {
             parent = current;
-            int cmp = newNode.key.compareTo(current.key);
+
+            int cmp;
+            if (newNode.key == null && current.key == null) {
+                cmp = 0;
+            } else if (newNode.key == null) {
+                cmp = -1;
+            } else if (current.key == null) {
+                cmp = 1;
+            } else {
+                cmp = newNode.key.compareTo(current.key);
+            }
+
             if (cmp == 0) {
                 current.value = newNode.value;
                 return root;
@@ -152,7 +171,16 @@ public class CustomHashCode <K extends Comparable<K>, V> {
         }
 
         newNode.parent = parent;
-        if (newNode.key.compareTo(parent.key) < 0) {
+        int cmp;
+        if (newNode.key == null) {
+            cmp = -1;
+        } else if (parent.key == null) {
+            cmp = 1;
+        } else {
+            cmp = newNode.key.compareTo(parent.key);
+        }
+
+        if (cmp < 0) {
             parent.left = newNode;
         } else {
             parent.right = newNode;
@@ -192,7 +220,17 @@ public class CustomHashCode <K extends Comparable<K>, V> {
     private V getFromTree(TreeNode<K, V> root, K key) {
         TreeNode<K, V> current = root;
         while (current != null) {
-            int cmp = key.compareTo(current.key);
+            int cmp;
+            if (key == null && current.key == null) {
+                cmp = 0;
+            } else if (key == null) {
+                cmp = -1;
+            } else if (current.key == null) {
+                cmp = 1;
+            } else {
+                cmp = key.compareTo(current.key);
+            }
+
             if (cmp == 0) {
                 return current.value;
             } else if (cmp < 0) {
@@ -258,7 +296,17 @@ public class CustomHashCode <K extends Comparable<K>, V> {
     private TreeNode<K, V> findTreeNode(TreeNode<K, V> root, K key) {
         TreeNode<K, V> current = root;
         while (current != null) {
-            int cmp = key.compareTo(current.key);
+            int cmp;
+            if (key == null && current.key == null) {
+                cmp = 0;
+            } else if (key == null) {
+                cmp = -1;
+            } else if (current.key == null) {
+                cmp = 1;
+            } else {
+                cmp = key.compareTo(current.key);
+            }
+
             if (cmp == 0) {
                 return current;
             } else if (cmp < 0) {
