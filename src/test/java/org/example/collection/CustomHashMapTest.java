@@ -1,12 +1,11 @@
 package org.example.collection;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+
 import static org.junit.jupiter.api.Assertions.*;
-
-public class CustomHashMapTest {
-
+class CustomHashMapTest {
     private CustomHashMap<String, Integer> map;
 
     @BeforeEach
@@ -186,5 +185,3 @@ public class CustomHashMapTest {
         }
     }
 }
-
-
